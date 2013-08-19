@@ -10,6 +10,7 @@
   <properties>
     <jbehave.core.version>4.0-beta-3</jbehave.core.version>
     <jbehave.site.version>3.1.1</jbehave.site.version>
+    <jython.version>2.7-b1</jython.version>
     <embeddables>**/*Stories.java</embeddables>
   </properties>
 
@@ -32,6 +33,18 @@
       <version>${jbehave.site.version}</version>
       <type>zip</type>
     </dependency>
+
+      <dependency>
+          <groupId>org.python</groupId>
+          <artifactId>jython-standalone</artifactId>
+          <version>${jython.version}</version>
+      </dependency>
+      <dependency>
+          <groupId>org.python</groupId>
+          <artifactId>jython</artifactId>
+          <version>${jython.version}</version>
+      </dependency>
+
   </dependencies>
 
   <build>
@@ -42,6 +55,9 @@
         <excludes>
           <exclude>**/*.java</exclude>
         </excludes>
+      </resource>
+      <resource>
+        <directory>src/main/jython</directory>
       </resource>
       <resource>
         <directory>src/main/resources</directory>
@@ -59,9 +75,32 @@
             <target>1.5</target>
           </configuration>
         </plugin>
+          <plugin>
+              <groupId>net.sf.mavenjython</groupId>
+              <artifactId>jython-compile-maven-plugin</artifactId>
+              <version>1.2</version>
+          </plugin>
       </plugins>
+
     </pluginManagement>
     <plugins>
+        <!--<groupId>com.servprise.maven.plugins</groupId>-->
+        <!--<artifactId>maven-jython-plugin</artifactId>-->
+        <!--<version>0.3</version>-->
+        <!--<configuration>-->
+        <!--<jythonHome>${project.basedir}/src/main/jython</jythonHome>-->
+        <!--<sourceDir>${project.basedir}/src/main/jython</sourceDir>-->
+        <!--</configuration>-->
+      <plugin>
+        <groupId>net.sf.mavenjython</groupId>
+        <artifactId>jython-compile-maven-plugin</artifactId>
+        <version>1.2</version>
+      </plugin>
+      <plugin>
+        <groupId>net.sf.mavenjython.test</groupId>
+        <artifactId>python-test-maven-plugin-external</artifactId>
+        <version>1.0</version>
+      </plugin>
       <plugin>
         <groupId>org.jbehave</groupId>
         <artifactId>jbehave-maven-plugin</artifactId>
@@ -97,5 +136,17 @@
       </plugin>
     </plugins>
   </build>
+  <repositories>
+    <repository>
+        <id>python-releases</id>
+        <name>Python Releases</name>
+        <url>https://oss.sonatype.org/content/repositories/python-releases</url>
+    </repository>
+      <repository>
+          <id>central-sync</id>
+          <name>Central Sync Sources</name>
+          <url>https://oss.sonatype.org/content/repositories/central-sync</url>
+      </repository>
+  </repositories>
 
 </project>
