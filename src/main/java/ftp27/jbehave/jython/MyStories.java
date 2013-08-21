@@ -24,6 +24,7 @@ import org.jbehave.core.steps.ParameterConverters.DateConverter;
 import org.jbehave.core.steps.ParameterConverters.ExamplesTableConverter;
 import ftp27.jbehave.jython.steps.MySteps;
 import org.python.util.PythonInterpreter;
+import org.python.util.PythonObjectInputStream;
 
 import static org.jbehave.core.io.CodeLocations.codeLocationFromClass;
 import static org.jbehave.core.reporters.Format.CONSOLE;
@@ -68,14 +69,7 @@ public class MyStories extends JUnitStories {
 
     @Override
     public InjectableStepsFactory stepsFactory() {
-        getPyObject();
-        return new InstanceStepsFactory(configuration(), null);
-    }
-
-    public void getPyObject() {
-        PythonInterpreter interp = new PythonInterpreter();
-        interp.execfile("**/JythonSteps.py");
-        //return null;
+        return new InstanceStepsFactory(configuration(), new Simple());
     }
 
     @Override
